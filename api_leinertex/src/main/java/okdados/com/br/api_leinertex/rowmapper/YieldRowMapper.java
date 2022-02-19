@@ -13,7 +13,6 @@ public class YieldRowMapper implements RowMapper<YieldEntity> {
 
         YieldEntity yieldEntity = new YieldEntity();
 
-        yieldEntity.setId(rs.getInt("id"));
         yieldEntity.setDisponibilidade(rs.getString("disponibilidade"));
         yieldEntity.setTamanho(rs.getFloat("tamanho"));
         yieldEntity.setMedida(rs.getString("medida"));

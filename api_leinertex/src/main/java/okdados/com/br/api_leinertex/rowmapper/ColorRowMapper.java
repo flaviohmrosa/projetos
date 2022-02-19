@@ -1,21 +1,23 @@
 package okdados.com.br.api_leinertex.rowmapper;
 
-import okdados.com.br.api_leinertex.entity.ProductEntity;
+import okdados.com.br.api_leinertex.controller.dto.ColorDTO;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ProductRowMapper implements RowMapper<ProductEntity> {
+public class ColorRowMapper implements RowMapper<ColorDTO> {
 
     @Override
-    public ProductEntity mapRow(ResultSet rs, int rowNum) throws SQLException {
+    public ColorDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-        ProductEntity productEntity = new ProductEntity();
+        ColorDTO colorDTO = new ColorDTO();
 
-        productEntity.setId(rs.getString("id"));;
-        productEntity.setNome(rs.getString("nome"));
+        colorDTO.setId(rs.getInt("id"));
+        colorDTO.setNome(rs.getString("nome"));
+        colorDTO.setCodigoCor(rs.getString("codigo_cor"));
+        colorDTO.setDisponivel(rs.getString("disponivel"));
 
-        return productEntity;
+        return colorDTO;
     }
 }

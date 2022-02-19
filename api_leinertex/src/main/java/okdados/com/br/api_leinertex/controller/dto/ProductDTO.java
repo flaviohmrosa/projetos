@@ -18,6 +18,7 @@ public class ProductDTO {
     public String sit;
 
     private List<YieldEntity> rendimento;
+    private List<MatizDTO> matiz;
 
 
 
@@ -91,5 +92,13 @@ public class ProductDTO {
 
     public void setRendimento(List<YieldEntity> rendimento) {
         this.rendimento = rendimento;
+    }
+
+    public List<MatizDTO> getMatiz() {
+        return matiz;
+    }
+
+    public void setMatiz(List<MatizDTO> matiz) {
+        this.matiz = matiz;
     }
 }

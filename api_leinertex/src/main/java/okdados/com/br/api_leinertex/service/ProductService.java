@@ -2,9 +2,8 @@ package okdados.com.br.api_leinertex.service;
 
 
 import net.minidev.json.JSONObject;
-import okdados.com.br.api_leinertex.controller.dto.LinksDTO;
-import okdados.com.br.api_leinertex.controller.dto.ProductDTO;
-import okdados.com.br.api_leinertex.controller.dto.ProductListDTO;
+import okdados.com.br.api_leinertex.controller.dto.*;
+import okdados.com.br.api_leinertex.repository.ColorDinamicRepository;
 import okdados.com.br.api_leinertex.repository.ProductDinamicRepository;
 import okdados.com.br.api_leinertex.repository.YieldDinamicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +19,8 @@ public class ProductService {
     ProductDinamicRepository productDinamicRepository;
     @Autowired
     YieldDinamicRepository yieldDinamicRepository;
+    @Autowired
+    ColorDinamicRepository colorDinamicRepository;
 
 
     public ProductListDTO findProductWithIdAndName(int page, int size) {
@@ -39,23 +40,31 @@ public class ProductService {
         return productListDTO;
     }
 
+    public List<MatizDTO> findMatizByProductId(String productId) {
+
+        return productDinamicRepository.findMatizByProductId(productId);
+
+    }
+
 
 
     public List<ProductDTO> findProductById(String id) {
         List<ProductDTO> productDTO = new ArrayList<>();
 
-        try {
-            productDTO = productDinamicRepository.findProductById(id);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        productDTO = productDinamicRepository.findProductById(id);
 
         for(ProductDTO produto : productDTO )
         {
-            produto.setRendimento(yieldDinamicRepository.findByCode(produto.getSit()));
+            produto.setRendimento(yieldDinamicRepository.findByProductId(id));
+            produto.setMatiz(this.findMatizByProductId(produto.getId()));
+            for(MatizDTO matizDTO : produto.getMatiz()) {
+                matizDTO.setCor(colorDinamicRepository.findColorByMatizAndProduct(produto.getId(), matizDTO.getId()));
+            }
         }
 
         return productDTO;
     }
+
+
 
 }

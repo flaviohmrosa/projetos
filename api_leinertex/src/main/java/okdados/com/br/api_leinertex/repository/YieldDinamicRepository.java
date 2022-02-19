@@ -15,20 +15,32 @@ public class YieldDinamicRepository {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    public List<YieldEntity> findByCode(String code) {
+    public List<YieldEntity> findByProductId(String productId) {
 
         String sql = "" +
-                "select " +
-                "  id " +
-                " ,disponibilidade " +
-                " ,tamanho " +
-                " ,medida " +
-                " ,rendimento_m2 " +
-                " ,disponivel " +
-                "from view_api_rendimento " +
-                "where codigo = ? ";
+                "SELECT " +
+                "  LTRIM(RTRIM(C.DESCRICAO)) AS disponibilidade " +
+                " ,C.VOLUME AS tamanho " +
+                " ,LTRIM(TRIM(C.VOLUME_ETIQUETA)) AS medida " +
+                " ,B.FATOR_CONV AS rendimento_m2 " +
+                " ,CASE WHEN A.ATIVO_SITE = 'S'  " +
+                "       THEN 'Sim' " +
+                "       ELSE 'Não' " +
+                "       END AS disponivel " +
+                "FROM BCEST61 A " +
+                " LEFT JOIN CADEMB C ON A.SIT = C.CODIGO " +
+                " LEFT JOIN BCEST122 D ON (A.COMISSAO = D.CODIGO AND 'A' = D.LETRA) " +
+                " LEFT JOIN TBL_CLASSIF_PROD B ON A.ID_CODIGO_CLASSE = B.ID_CODIGO_CLASSE " +
+                "WHERE A.SUBGRUPO = 2 " +
+                "AND ATIVO_SITE = 'S' " +
+                "AND SUBSTRING(A.SUBCLASSE,1,2) = ? " +
+                "GROUP BY C.DESCRICAO " +
+                " ,C.VOLUME " +
+                " ,C.VOLUME_ETIQUETA " +
+                " ,B.FATOR_CONV " +
+                " ,A.ATIVO_SITE";
 
-        List<YieldEntity> list = jdbcTemplate.query(sql, new Object[] {code}, new YieldRowMapper());
+        List<YieldEntity> list = jdbcTemplate.query(sql, new Object[] {productId}, new YieldRowMapper());
         return list;
     }
 }

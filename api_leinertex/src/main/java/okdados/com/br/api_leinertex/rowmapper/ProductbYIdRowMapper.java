@@ -19,7 +19,6 @@ public class ProductbYIdRowMapper implements RowMapper<ProductDTO> {
         productDTO.setAcabamento(rs.getString("acabamento"));
         productDTO.setSuperficie(rs.getString("superficie"));
         productDTO.setAmbiente(rs.getString("ambiente"));
-        productDTO.setSit(rs.getString("sit"));
 
 
         return productDTO;

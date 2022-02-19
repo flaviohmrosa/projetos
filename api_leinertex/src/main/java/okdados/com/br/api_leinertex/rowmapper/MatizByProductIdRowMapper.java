@@ -1,27 +1,22 @@
 package okdados.com.br.api_leinertex.rowmapper;
 
-import okdados.com.br.api_leinertex.controller.dto.ProductDTO;
+import okdados.com.br.api_leinertex.controller.dto.MatizDTO;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ProductbYIdRowMapper implements RowMapper<ProductDTO> {
+public class MatizByProductIdRowMapper implements RowMapper<MatizDTO> {
 
     @Override
-    public ProductDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+    public MatizDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-        ProductDTO productDTO = new ProductDTO();
-        productDTO.setId(rs.getString("id"));
-        productDTO.setNome(rs.getString("nome"));
-        productDTO.setCategoria_tipo(rs.getString("categoria_tipo"));
-        productDTO.setLinha(rs.getString("linha"));
-        productDTO.setAcabamento(rs.getString("acabamento"));
-        productDTO.setSuperficie(rs.getString("superficie"));
-        productDTO.setAmbiente(rs.getString("ambiente"));
-        productDTO.setSit(rs.getString("sit"));
+        MatizDTO matizDTO = new MatizDTO();
 
+        matizDTO.setIdProduto(rs.getString("id_produto"));
+        matizDTO.setDescricao(rs.getString("matiz"));
+        matizDTO.setId(rs.getInt("id"));
 
-        return productDTO;
+        return matizDTO;
     }
 }
