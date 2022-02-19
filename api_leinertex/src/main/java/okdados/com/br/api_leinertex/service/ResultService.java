@@ -1,6 +1,6 @@
 package okdados.com.br.api_leinertex.service;
 
-import okdados.com.br.api_leinertex.dto.ResultAllParametersDTO;
+import okdados.com.br.api_leinertex.controller.dto.ResultAllParametersDTO;
 import okdados.com.br.api_leinertex.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

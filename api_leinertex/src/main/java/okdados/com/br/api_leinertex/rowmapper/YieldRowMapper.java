@@ -1,21 +1,25 @@
 package okdados.com.br.api_leinertex.rowmapper;
 
-import okdados.com.br.api_leinertex.entity.ProductEntity;
+import okdados.com.br.api_leinertex.entity.YieldEntity;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ProductRowMapper implements RowMapper<ProductEntity> {
+public class YieldRowMapper implements RowMapper<YieldEntity> {
 
     @Override
-    public ProductEntity mapRow(ResultSet rs, int rowNum) throws SQLException {
+    public YieldEntity mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-        ProductEntity productEntity = new ProductEntity();
+        YieldEntity yieldEntity = new YieldEntity();
 
-        productEntity.setId(rs.getString("CODIGO"));;
-        productEntity.setNome(rs.getString("DESCRICAO"));
+        yieldEntity.setId(rs.getInt("id"));
+        yieldEntity.setDisponibilidade(rs.getString("disponibilidade"));
+        yieldEntity.setTamanho(rs.getFloat("tamanho"));
+        yieldEntity.setMedida(rs.getString("medida"));
+        yieldEntity.setRendimento_m2(rs.getFloat("rendimento_m2"));
+        yieldEntity.setDisponivel(rs.getString("disponivel"));
 
-        return productEntity;
+        return yieldEntity;
     }
 }

@@ -1,4 +1,4 @@
-package okdados.com.br.api_leinertex.dto;
+package okdados.com.br.api_leinertex.controller.dto;
 
 public class LinksDTO {
 

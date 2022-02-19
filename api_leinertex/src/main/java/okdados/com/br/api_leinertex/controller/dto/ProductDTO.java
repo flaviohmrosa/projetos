@@ -1,4 +1,9 @@
-package okdados.com.br.api_leinertex.dto;
+package okdados.com.br.api_leinertex.controller.dto;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import okdados.com.br.api_leinertex.entity.YieldEntity;
+
+import java.util.List;
 
 public class ProductDTO {
 
@@ -9,7 +14,12 @@ public class ProductDTO {
     public String acabamento;
     public String superficie;
     public String ambiente;
+    @JsonIgnore
     public String sit;
+
+    private List<YieldEntity> rendimento;
+
+
 
     public String getId() {
         return id;
@@ -73,5 +83,13 @@ public class ProductDTO {
 
     public void setSit(String sit) {
         this.sit = sit;
+    }
+
+    public List<YieldEntity> getRendimento() {
+        return rendimento;
+    }
+
+    public void setRendimento(List<YieldEntity> rendimento) {
+        this.rendimento = rendimento;
     }
 }
