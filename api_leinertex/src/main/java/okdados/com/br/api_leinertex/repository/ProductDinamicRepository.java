@@ -1,8 +1,8 @@
 package okdados.com.br.api_leinertex.repository;
 
 
-import okdados.com.br.api_leinertex.controller.dto.MatizDTO;
-import okdados.com.br.api_leinertex.controller.dto.ProductDTO;
+import okdados.com.br.api_leinertex.dto.MatizDTO;
+import okdados.com.br.api_leinertex.dto.ProductDTO;
 import okdados.com.br.api_leinertex.entity.ProductEntity;
 import okdados.com.br.api_leinertex.rowmapper.MatizByProductIdRowMapper;
 import okdados.com.br.api_leinertex.rowmapper.ProductRowMapper;

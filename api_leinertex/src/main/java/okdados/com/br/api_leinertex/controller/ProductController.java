@@ -1,8 +1,8 @@
 package okdados.com.br.api_leinertex.controller;
 
-import okdados.com.br.api_leinertex.controller.dto.ProductDTO;
-import okdados.com.br.api_leinertex.controller.dto.ProductListDTO;
-import okdados.com.br.api_leinertex.controller.dto.ResultAllParametersDTO;
+import okdados.com.br.api_leinertex.dto.ProductDTO;
+import okdados.com.br.api_leinertex.dto.ProductListDTO;
+import okdados.com.br.api_leinertex.dto.ResultAllParametersDTO;
 import okdados.com.br.api_leinertex.entity.YieldEntity;
 import okdados.com.br.api_leinertex.service.ProductService;
 import okdados.com.br.api_leinertex.service.ResultService;

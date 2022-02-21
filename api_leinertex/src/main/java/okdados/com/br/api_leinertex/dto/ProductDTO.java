@@ -1,4 +1,4 @@
-package okdados.com.br.api_leinertex.controller.dto;
+package okdados.com.br.api_leinertex.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import okdados.com.br.api_leinertex.entity.YieldEntity;
