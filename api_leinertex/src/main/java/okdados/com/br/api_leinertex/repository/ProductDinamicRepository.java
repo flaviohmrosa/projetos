@@ -132,18 +132,7 @@ public class ProductDinamicRepository {
                     "WHERE a.SUBGRUPO = 2   " +
                     "AND ATIVO_SITE = 'S'   " +
                     "AND SUBSTRING(a.SUBCLASSE,1,2) = ?  " +
-                    "GROUP BY SUBSTRING(a.SUBCLASSE,1,2)   " +
-                    "  SUBSTRING(A.SUBCLASSE,1,2) id_produto   " +
-                    " ,LTRIM(RTRIM(MATIZ_1)) matiz  " +
-                    " ,va.id id  " +
-                    "FROM BCEST61 A  " +
-                    " INNER JOIN view_api_matiz va ON va.descricao = LTRIM(RTRIM(MATIZ_1))  " +
-                    "WHERE A.SUBGRUPO = 2   " +
-                    "AND ATIVO_SITE = 'S'   " +
-                    "AND SUBSTRING(A.SUBCLASSE,1,2) = ?  " +
-                    "GROUP BY SUBSTRING(A.SUBCLASSE,1,2)   " +
-                    "        ,MATIZ_1  " +
-                    "        ,va.id";
+                    "GROUP BY SUBSTRING(a.SUBCLASSE,1,2), LTRIM(RTRIM(MATIZ_1)), va.id  ";
 
         List<MatizDTO> list = jdbcTemplate.query(sql, new Object[] {productId}, new MatizByProductIdRowMapper());
         return list;

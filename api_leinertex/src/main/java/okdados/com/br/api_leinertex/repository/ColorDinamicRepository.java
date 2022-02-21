@@ -31,6 +31,7 @@ public class ColorDinamicRepository {
                     " INNER JOIN view_api_matiz VA ON VA.descricao = LTRIM(RTRIM(b.MATIZ_1))  " +
                     "WHERE SUBSTRING(b.SUBCLASSE,1,2) = ?  " +
                     "AND VA.id = ?  " +
+                    "AND a.DESCRICAO <> '' " +
                     "GROUP BY a.CODIGO  " +
                     "        ,a.DESCRICAO  " +
                     "        ,b.COD_RGB_PROD  " +
