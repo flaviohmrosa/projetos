@@ -23,7 +23,7 @@ public class YieldService {
         }
 
         public List<YieldEntity> findByCode(String code) {
-            return yieldDinamicRepository.findByCode(code);
+            return yieldDinamicRepository.findByProductId(code);
         }
 
 

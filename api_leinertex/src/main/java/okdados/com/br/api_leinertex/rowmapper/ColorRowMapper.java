@@ -1,6 +1,6 @@
 package okdados.com.br.api_leinertex.rowmapper;
 
-import okdados.com.br.api_leinertex.controller.dto.ColorDTO;
+import okdados.com.br.api_leinertex.dto.ColorDTO;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

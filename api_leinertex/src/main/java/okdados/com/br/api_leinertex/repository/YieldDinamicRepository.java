@@ -21,7 +21,7 @@ public class YieldDinamicRepository {
                 "SELECT " +
                 "  LTRIM(RTRIM(C.DESCRICAO)) AS disponibilidade " +
                 " ,C.VOLUME AS tamanho " +
-                " ,LTRIM(TRIM(C.VOLUME_ETIQUETA)) AS medida " +
+                " ,LTRIM(RTRIM(C.VOLUME_ETIQUETA)) AS medida " +
                 " ,B.FATOR_CONV AS rendimento_m2 " +
                 " ,CASE WHEN A.ATIVO_SITE = 'S'  " +
                 "       THEN 'Sim' " +

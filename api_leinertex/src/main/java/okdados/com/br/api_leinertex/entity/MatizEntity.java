@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "VIEW_API_MATIZ")
+@Table(name = "view_api_matiz")
 public class MatizEntity {
 
     @Id
