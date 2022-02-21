@@ -2,7 +2,6 @@ package okdados.com.br.api_leinertex.service;
 
 
 import net.minidev.json.JSONObject;
-import okdados.com.br.api_leinertex.controller.dto.*;
 import okdados.com.br.api_leinertex.dto.LinksDTO;
 import okdados.com.br.api_leinertex.dto.MatizDTO;
 import okdados.com.br.api_leinertex.dto.ProductDTO;
