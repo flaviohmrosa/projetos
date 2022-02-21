@@ -49,7 +49,14 @@ public class ProductDinamicRepository {
                     " ,superficie " +
                     " ,ambiente " +
                     "from view_api_produtos " +
-                    "where id = ? ";
+                    "where id = ? " +
+                    "group by  id " +
+                    "         ,nome " +
+                    "         ,categoria_tipo " +
+                    "         ,linha " +
+                    "         ,acabamento " +
+                    "         ,superficie " +
+                    "         ,ambiente ";
 
         List<ProductDTO> list = jdbcTemplate.query(sql, new Object[] {id}, new ProductbYIdRowMapper());
         return list;
@@ -58,6 +65,7 @@ public class ProductDinamicRepository {
     public List<MatizDTO> findMatizByProductId(String productId) {
         String sql = "" +
                     "SELECT  " +
+<<<<<<< HEAD
                     "  SUBSTRING(a.SUBCLASSE,1,2) id_produto   " +
                     " ,LTRIM(RTRIM(MATIZ_1)) matiz  " +
                     " ,va.id id  " +
@@ -67,6 +75,17 @@ public class ProductDinamicRepository {
                     "AND ATIVO_SITE = 'S'   " +
                     "AND SUBSTRING(a.SUBCLASSE,1,2) = ?  " +
                     "GROUP BY SUBSTRING(a.SUBCLASSE,1,2)   " +
+=======
+                    "  SUBSTRING(A.SUBCLASSE,1,2) id_produto   " +
+                    " ,LTRIM(RTRIM(MATIZ_1)) matiz  " +
+                    " ,va.id id  " +
+                    "FROM BCEST61 A  " +
+                    " INNER JOIN view_api_matiz va ON va.descricao = LTRIM(RTRIM(MATIZ_1))  " +
+                    "WHERE A.SUBGRUPO = 2   " +
+                    "AND ATIVO_SITE = 'S'   " +
+                    "AND SUBSTRING(A.SUBCLASSE,1,2) = ?  " +
+                    "GROUP BY SUBSTRING(A.SUBCLASSE,1,2)   " +
+>>>>>>> 3d89b1bf3f995ad325a71869532759f22d4889e0
                     "        ,MATIZ_1  " +
                     "        ,va.id";
 

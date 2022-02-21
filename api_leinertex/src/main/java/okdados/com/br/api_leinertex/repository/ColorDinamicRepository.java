@@ -18,11 +18,25 @@ public class ColorDinamicRepository {
     public List<ColorDTO> findColorByMatizAndProduct(String idProduto, int idMatiz) {
 
         String sql = "" +
+<<<<<<< HEAD
+                    "SELECT   " +
+=======
                     "SELECT  " +
+>>>>>>> 1af83d22701bdf5a970e6a55e262ad105ecae987
                     "  a.CODIGO id  " +
                     " ,LTRIM(RTRIM(a.DESCRICAO)) nome  " +
                     " ,LTRIM(RTRIM(b.COD_RGB_PROD)) codigo_cor " +
                     " ,case when b.ATIVO_SITE = 'S' then 'Sim' else 'Não' end disponivel  " +
+<<<<<<< HEAD
+                    "FROM BCEST73 a   " +
+                    " INNER JOIN BCEST61 b ON a.CODIGO = b.COR  " +
+                    " INNER JOIN view_api_matiz VA ON VA.descricao = LTRIM(RTRIM(b.MATIZ_1))  " +
+                    "WHERE SUBSTRING(b.SUBCLASSE,1,2) = ?  " +
+                    "AND VA.id = ?  " +
+                    "GROUP BY a.CODIGO  " +
+                    "        ,a.DESCRICAO  " +
+                    "        ,b.COD_RGB_PROD  " +
+=======
                     "FROM BCEST73 a " +
                     " INNER JOIN BCEST61 b ON a.CODIGO = b.COR  " +
                     " INNER JOIN view_api_matiz VA ON VA.descricao = LTRIM(RTRIM(b.MATIZ_1))  " +
@@ -31,6 +45,7 @@ public class ColorDinamicRepository {
                     "GROUP BY a.CODIGO  " +
                     "        ,a.DESCRICAO " +
                     "        ,b.COD_RGB_PROD " +
+>>>>>>> 1af83d22701bdf5a970e6a55e262ad105ecae987
                     "        ,b.ATIVO_SITE ";
 
         List<ColorDTO> list = jdbcTemplate.query(sql, new Object[] {idProduto, idMatiz}, new ColorRowMapper());
