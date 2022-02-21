@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Locale;
 
 
 @RestController
@@ -43,7 +44,14 @@ public class ProductController {
                                                     @RequestParam(value = "ambiente", required = false) String ambiente,
                                                     @RequestParam(value = "acabamento", required = false) String acabamento,
                                                     @RequestParam(value = "superficie", required = false) String superficie) {
-        return productService.findProductWithIdAndName(page, size, matiz, tipo, linha, ambiente, acabamento, superficie);
+        return productService.findProductWithIdAndName(page,
+                size,
+                matiz,
+                tipo,
+                linha,
+                ambiente,
+                acabamento,
+                superficie);
     }
 
     @GetMapping(path = "/rendimento")

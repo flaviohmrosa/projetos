@@ -57,7 +57,7 @@ public class ColorDinamicRepository {
                     " LEFT JOIN TBL_CLASSIF_PROD B ON A.ID_CODIGO_CLASSE = B.ID_CODIGO_CLASSE " +
                     "WHERE A.SUBGRUPO = 2 " +
                     "AND ATIVO_SITE = 'S' " +
-                    "AND A.MATIZ_1 = ? " +
+                    "AND A.MATIZ_1 = UPPER(?) " +
                     "GROUP BY  A.MATIZ_1, " +
                             " A.COR, " +
                             " E.DESCRICAO, " +

@@ -56,32 +56,32 @@ public class ProductDinamicRepository {
 
         if(matiz != null){
             map.put("matiz", matiz);
-            sql +=" AND A.MATIZ_1 = :matiz ";
+            sql +=" AND A.MATIZ_1 = UPPER(:matiz) ";
         }
 
         if(tipo != null){
             map.put("tipo", tipo);
-            sql +=" AND A.TIPO_PRODUTO = :tipo ";
+            sql +=" AND A.TIPO_PRODUTO = UPPER(:tipo) ";
         }
 
         if(linha != null){
             map.put("linha", linha);
-            sql +=" AND A.LINHA_SITE = :linha ";
+            sql +=" AND A.LINHA_SITE = UPPER(:linha) ";
         }
 
         if(ambiente != null){
             map.put("ambiente", ambiente);
-            sql +=" AND A.AMBIENTE = :ambiente ";
+            sql +=" AND A.AMBIENTE = UPPER(:ambiente) ";
         }
 
         if(acabamento != null){
             map.put("acabamento", acabamento);
-            sql +=" AND A.ACABAMENTO = :acabamento ";
+            sql +=" AND A.ACABAMENTO = UPPER(:acabamento) ";
         }
 
         if(superficie != null){
             map.put("superficie", superficie);
-            sql +=" AND A.SUPERFICIE_1 = :superficie ";
+            sql +=" AND A.SUPERFICIE_1 = UPPER(:superficie) ";
         }
 
         sql +=  " group by SUBSTRING(A.SUBCLASSE,1,2) " +
@@ -153,7 +153,7 @@ public class ProductDinamicRepository {
                     "WHERE A.SUBGRUPO = 2 " +
                     "AND ATIVO_SITE = 'S' " +
                     "AND A.TIPO_PRODUTO <> '' " +
-                    "AND A.MATIZ_1 = ? " +
+                    "AND A.MATIZ_1 = UPPER(?) " +
                     "GROUP BY A.TIPO_PRODUTO " +
                     "ORDER BY A.TIPO_PRODUTO";
 
@@ -182,8 +182,8 @@ public class ProductDinamicRepository {
                     "    WHERE A.SUBGRUPO = 2 " +
                     "    AND ATIVO_SITE = 'S' " +
                     "    AND A.TIPO_PRODUTO <> '' " +
-                    "    AND A.MATIZ_1 = ? " +
-                    "    AND A.TIPO_PRODUTO = ? " +
+                    "    AND A.MATIZ_1 = UPPER(?) " +
+                    "    AND A.TIPO_PRODUTO = UPPER(?) " +
                     "    GROUP BY SUBSTRING(A.SUBCLASSE,1,2) " +
                     "            ,LTRIM(RTRIM(B.DESCRICAO_COMERCIAL)) " +
                     "    ORDER BY SUBSTRING(A.SUBCLASSE,1,2) " +
