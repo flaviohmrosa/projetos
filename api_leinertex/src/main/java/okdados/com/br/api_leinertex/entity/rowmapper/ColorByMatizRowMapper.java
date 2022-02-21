@@ -19,6 +19,22 @@ public class ColorByMatizRowMapper implements RowMapper<ColorByMatizDTO> {
         colorByMatizDTO.setCodigoCor(rs.getString("codigo_cor"));
         colorByMatizDTO.setDisponivel(rs.getString("disponivel"));
 
+        if(colorByMatizDTO.getCodigoCor() != null) {
+            String red;
+            String green;
+            String blue;
+
+            red = colorByMatizDTO.getCodigoCor().substring(0, 3);
+            green = colorByMatizDTO.getCodigoCor().substring(3, 6);
+            blue = colorByMatizDTO.getCodigoCor().substring(6, 9);
+
+            String hex = String.format("#%02X%02X%02X", Integer.parseInt(red),
+                    Integer.parseInt(green),
+                    Integer.parseInt(blue));
+
+            colorByMatizDTO.setCodigoCor(hex);
+        }
+
         return colorByMatizDTO;
     }
 }

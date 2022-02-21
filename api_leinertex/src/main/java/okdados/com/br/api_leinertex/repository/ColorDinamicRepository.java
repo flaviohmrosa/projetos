@@ -24,7 +24,10 @@ public class ColorDinamicRepository {
                     "SELECT  " +
                     "  a.CODIGO id  " +
                     " ,LTRIM(RTRIM(a.DESCRICAO)) nome  " +
-                    " ,LTRIM(RTRIM(b.COD_RGB_PROD)) codigo_cor " +
+                    " ,CASE WHEN (ISNUMERIC(b.COD_RGB_PROD) = 1 OR b.COD_RGB_PROD = '') " +
+                        " THEN REPLICATE('0', 9 - LEN(LTRIM(RTRIM(b.COD_RGB_PROD)))) + b.COD_RGB_PROD " +
+                        "   ELSE NULL " +
+                        "   END codigo_cor " +
                     " ,case when b.ATIVO_SITE = 'S' then 'Sim' else 'Não' end disponivel  " +
                     "FROM BCEST73 a   " +
                     " INNER JOIN BCEST61 b ON a.CODIGO = b.COR  " +
@@ -48,7 +51,10 @@ public class ColorDinamicRepository {
                     " LTRIM(RTRIM(A.MATIZ_1)) AS 'matiz', " +
                     " A.COR AS 'id', " +
                     " LTRIM(RTRIM(E.DESCRICAO)) AS 'nome', " +
-                    " LTRIM(RTRIM(A.COD_RGB_PROD)) AS 'codigo_cor', " +
+                    " CASE WHEN (ISNUMERIC(A.COD_RGB_PROD) = 1 OR A.COD_RGB_PROD = '') " +
+                        " THEN REPLICATE('0', 9 - LEN(LTRIM(RTRIM(A.COD_RGB_PROD)))) + A.COD_RGB_PROD " +
+                        "  ELSE NULL " +
+                        "  END AS 'codigo_cor', " +
                     " case when A.ATIVO_SITE = 'S' then 'Sim' else 'Não' end disponivel " +
                     "FROM BCEST61 A " +
                     " LEFT JOIN CADEMB C on A.SIT = C.CODIGO " +
