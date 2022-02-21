@@ -1,12 +1,10 @@
 package okdados.com.br.api_leinertex.dto;
 
-import okdados.com.br.api_leinertex.entity.ProductEntity;
-
 import java.util.List;
 
 public class ProductListDTO {
 
-    public List<ProductEntity> produtos;
+    public List<ProductIdAndNameDTO> produtos;
     public int limit;
     public LinksDTO links;
 
@@ -28,11 +26,11 @@ public class ProductListDTO {
         this.links = links;
     }
 
-    public List<ProductEntity> getProdutos() {
+    public List<ProductIdAndNameDTO> getProdutos() {
         return produtos;
     }
 
-    public void setProdutos(List<ProductEntity> produtos) {
+    public void setProdutos(List<ProductIdAndNameDTO> produtos) {
         this.produtos = produtos;
     }
 }

@@ -2,14 +2,6 @@ package okdados.com.br.api_leinertex.service;
 
 
 import net.minidev.json.JSONObject;
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-import okdados.com.br.api_leinertex.dto.*;
-=======
-import okdados.com.br.api_leinertex.controller.dto.*;
->>>>>>> 1af83d22701bdf5a970e6a55e262ad105ecae987
->>>>>>> 3d89b1bf3f995ad325a71869532759f22d4889e0
 import okdados.com.br.api_leinertex.dto.LinksDTO;
 import okdados.com.br.api_leinertex.dto.MatizDTO;
 import okdados.com.br.api_leinertex.dto.ProductDTO;
@@ -34,7 +26,14 @@ public class ProductService {
     ColorDinamicRepository colorDinamicRepository;
 
 
-    public ProductListDTO findProductWithIdAndName(int page, int size) {
+    public ProductListDTO findProductWithIdAndName(int page,
+                                                   int size,
+                                                   String matiz,
+                                                   String tipo,
+                                                   String linha,
+                                                   String ambiente,
+                                                   String acabamento,
+                                                   String superficie) {
 
         ProductListDTO productListDTO = new ProductListDTO();
         LinksDTO linksDTO = new LinksDTO();
@@ -43,7 +42,7 @@ public class ProductService {
         linksDTO.next = "lista-produtos/page=" + (page + 1);
         linksDTO.prev = "lista-produtos/page=" + page;
 
-        productListDTO.setProdutos(productDinamicRepository.findProductWithIdAndName(page, size));
+        productListDTO.setProdutos(productDinamicRepository.findProductWithIdAndName(page, size, matiz, tipo, linha, ambiente, acabamento, superficie));
         productListDTO.setLimit(size);
         productListDTO.setLinks(linksDTO);
 

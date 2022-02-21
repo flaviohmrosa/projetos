@@ -1,7 +1,7 @@
 package okdados.com.br.api_leinertex.repository;
 
 import okdados.com.br.api_leinertex.entity.YieldEntity;
-import okdados.com.br.api_leinertex.rowmapper.YieldRowMapper;
+import okdados.com.br.api_leinertex.entity.rowmapper.YieldRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;

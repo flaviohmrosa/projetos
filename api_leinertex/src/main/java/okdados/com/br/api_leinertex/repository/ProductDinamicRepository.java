@@ -3,36 +3,95 @@ package okdados.com.br.api_leinertex.repository;
 
 import okdados.com.br.api_leinertex.dto.MatizDTO;
 import okdados.com.br.api_leinertex.dto.ProductDTO;
-import okdados.com.br.api_leinertex.entity.ProductEntity;
-import okdados.com.br.api_leinertex.rowmapper.MatizByProductIdRowMapper;
-import okdados.com.br.api_leinertex.rowmapper.ProductRowMapper;
-import okdados.com.br.api_leinertex.rowmapper.ProductbYIdRowMapper;
+import okdados.com.br.api_leinertex.dto.ProductIdAndNameDTO;
+import okdados.com.br.api_leinertex.dto.ProductTypeDTO;
+import okdados.com.br.api_leinertex.entity.rowmapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class ProductDinamicRepository {
 
     @Autowired
     JdbcTemplate jdbcTemplate;
+    @Autowired
+    NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public List<ProductEntity> findProductWithIdAndName(int page, int size) {
+
+    @PersistenceContext
+    private EntityManager entityManager;
+
+
+    public List<ProductIdAndNameDTO> findProductWithIdAndName(int page,
+                                                        int size,
+                                                        String matiz,
+                                                        String tipo,
+                                                        String linha,
+                                                        String ambiente,
+                                                        String acabamento,
+                                                        String superficie) {
+
+        List<ProductIdAndNameDTO> list = new ArrayList<>();
+        final Map<String, Object> map = new HashMap<>();
+        map.put("page", page);
+        map.put("size", size);
 
         String sql = "" +
-                    "select " +
-                    "  id " +
-                    " ,nome " +
-                    "from view_api_produtos " +
-                    "group by id " +
-                    "        ,nome " +
-                    "order by nome " +
-                    "OFFSET (? - 1) * ? ROWS  " +
-                    "FETCH NEXT ? ROWS ONLY ";
+                    "SELECT " +
+                    "  SUBSTRING(A.SUBCLASSE,1,2) AS 'id' " +
+                    " ,LTRIM(RTRIM(B.DESCRICAO_COMERCIAL)) AS 'nome' " +
+                    "FROM BCEST61 A " +
+                    " LEFT JOIN TBL_CLASSIF_PROD B ON A.ID_CODIGO_CLASSE = B.ID_CODIGO_CLASSE " +
+                    "WHERE A.SUBGRUPO = 2 " +
+                    "AND ATIVO_SITE = 'S' ";
 
-        List<ProductEntity> list = jdbcTemplate.query(sql, new Object[] {page, size, size}, new ProductRowMapper());
+        if(matiz != null){
+            map.put("matiz", matiz);
+            sql +=" AND A.MATIZ_1 = :matiz ";
+        }
+
+        if(tipo != null){
+            map.put("tipo", tipo);
+            sql +=" AND A.TIPO_PRODUTO = :tipo ";
+        }
+
+        if(linha != null){
+            map.put("linha", linha);
+            sql +=" AND A.LINHA_SITE = :linha ";
+        }
+
+        if(ambiente != null){
+            map.put("ambiente", ambiente);
+            sql +=" AND A.AMBIENTE = :ambiente ";
+        }
+
+        if(acabamento != null){
+            map.put("acabamento", acabamento);
+            sql +=" AND A.ACABAMENTO = :acabamento ";
+        }
+
+        if(superficie != null){
+            map.put("superficie", superficie);
+            sql +=" AND A.SUPERFICIE_1 = :superficie ";
+        }
+
+        sql +=  " group by SUBSTRING(A.SUBCLASSE,1,2) " +
+                "         ,LTRIM(RTRIM(B.DESCRICAO_COMERCIAL)) " +
+                " order by LTRIM(RTRIM(B.DESCRICAO_COMERCIAL)) " +
+                " OFFSET (:page - 1) * :size ROWS " +
+                " FETCH NEXT :size ROWS ONLY ";
+
+        list = this.namedParameterJdbcTemplate.query(sql,map,new ProductRowMapper());
+
         return list;
     }
 
@@ -65,7 +124,6 @@ public class ProductDinamicRepository {
     public List<MatizDTO> findMatizByProductId(String productId) {
         String sql = "" +
                     "SELECT  " +
-<<<<<<< HEAD
                     "  SUBSTRING(a.SUBCLASSE,1,2) id_produto   " +
                     " ,LTRIM(RTRIM(MATIZ_1)) matiz  " +
                     " ,va.id id  " +
@@ -75,7 +133,6 @@ public class ProductDinamicRepository {
                     "AND ATIVO_SITE = 'S'   " +
                     "AND SUBSTRING(a.SUBCLASSE,1,2) = ?  " +
                     "GROUP BY SUBSTRING(a.SUBCLASSE,1,2)   " +
-=======
                     "  SUBSTRING(A.SUBCLASSE,1,2) id_produto   " +
                     " ,LTRIM(RTRIM(MATIZ_1)) matiz  " +
                     " ,va.id id  " +
@@ -85,11 +142,70 @@ public class ProductDinamicRepository {
                     "AND ATIVO_SITE = 'S'   " +
                     "AND SUBSTRING(A.SUBCLASSE,1,2) = ?  " +
                     "GROUP BY SUBSTRING(A.SUBCLASSE,1,2)   " +
->>>>>>> 3d89b1bf3f995ad325a71869532759f22d4889e0
                     "        ,MATIZ_1  " +
                     "        ,va.id";
 
         List<MatizDTO> list = jdbcTemplate.query(sql, new Object[] {productId}, new MatizByProductIdRowMapper());
         return list;
+    }
+
+    public List<ProductTypeDTO> findProductTypeByMatiz(String matiz) {
+
+        try {
+
+            String sql = "" +
+                    "SELECT  " +
+                    " LTRIM(RTRIM(A.TIPO_PRODUTO)) tipo_produto " +
+                    "FROM BCEST61 A " +
+                    " LEFT JOIN CADEMB C on A.SIT = C.CODIGO " +
+                    " LEFT JOIN BCEST73 E ON A.COR = E.CODIGO " +
+                    " LEFT JOIN BCEST122 D ON (A.COMISSAO = D.CODIGO and 'A' = D.LETRA) " +
+                    " LEFT JOIN TBL_CLASSIF_PROD B ON A.ID_CODIGO_CLASSE = B.ID_CODIGO_CLASSE " +
+                    "WHERE A.SUBGRUPO = 2 " +
+                    "AND ATIVO_SITE = 'S' " +
+                    "AND A.TIPO_PRODUTO <> '' " +
+                    "AND A.MATIZ_1 = ? " +
+                    "GROUP BY A.TIPO_PRODUTO " +
+                    "ORDER BY A.TIPO_PRODUTO";
+
+            List<ProductTypeDTO> list = jdbcTemplate.query(sql, new Object[] {matiz}, new ProductTypeRowMapper());
+            return list;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    public List<ProductIdAndNameDTO> findProductByMatizAndType(String matiz, String type) {
+        try {
+
+            String sql = "" +
+                    "    SELECT " +
+                    "       SUBSTRING(A.SUBCLASSE,1,2) AS 'id' " +
+                    "       ,LTRIM(RTRIM(B.DESCRICAO_COMERCIAL)) AS 'nome' " +
+                    "    FROM BCEST61 A " +
+                    "    LEFT JOIN CADEMB C on A.SIT = C.CODIGO " +
+                    "    LEFT JOIN BCEST73 E ON A.COR = E.CODIGO " +
+                    "    LEFT JOIN BCEST122 D ON (A.COMISSAO = D.CODIGO and 'A' = D.LETRA) " +
+                    "    LEFT JOIN TBL_CLASSIF_PROD B ON A.ID_CODIGO_CLASSE = B.ID_CODIGO_CLASSE " +
+                    "    WHERE A.SUBGRUPO = 2 " +
+                    "    AND ATIVO_SITE = 'S' " +
+                    "    AND A.TIPO_PRODUTO <> '' " +
+                    "    AND A.MATIZ_1 = ? " +
+                    "    AND A.TIPO_PRODUTO = ? " +
+                    "    GROUP BY SUBSTRING(A.SUBCLASSE,1,2) " +
+                    "            ,LTRIM(RTRIM(B.DESCRICAO_COMERCIAL)) " +
+                    "    ORDER BY SUBSTRING(A.SUBCLASSE,1,2) " +
+                    "            ,LTRIM(RTRIM(B.DESCRICAO_COMERCIAL)) ";
+
+            List<ProductIdAndNameDTO> list = jdbcTemplate.query(sql, new Object[] {matiz, type}, new ProductIdAndNameRowMapper());
+            return list;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

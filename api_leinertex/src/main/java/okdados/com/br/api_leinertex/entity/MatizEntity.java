@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import static jdk.nashorn.internal.objects.NativeString.trim;
+
 @Entity
 @Table(name = "view_api_matiz")
 public class MatizEntity {
@@ -25,7 +27,7 @@ public class MatizEntity {
     }
 
     public String getDescricao() {
-        return descricao;
+        return trim(descricao);
     }
 
     public void setDescricao(String descricao) {

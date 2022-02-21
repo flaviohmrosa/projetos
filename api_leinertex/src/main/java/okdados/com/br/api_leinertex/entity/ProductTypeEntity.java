@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import static jdk.nashorn.internal.objects.NativeString.trim;
+
 @Entity
 @Table(name = "VIEW_API_TIPO_PRODUTO")
 public class ProductTypeEntity {
@@ -26,7 +28,7 @@ public class ProductTypeEntity {
     }
 
     public String getDescricao() {
-        return descricao;
+        return trim(descricao);
     }
 
     public void setDescricao(String descricao) {

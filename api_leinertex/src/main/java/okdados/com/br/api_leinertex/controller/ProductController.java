@@ -1,17 +1,16 @@
 package okdados.com.br.api_leinertex.controller;
 
+import okdados.com.br.api_leinertex.dto.ColorByMatizDTO;
 import okdados.com.br.api_leinertex.dto.ProductDTO;
 import okdados.com.br.api_leinertex.dto.ProductListDTO;
 import okdados.com.br.api_leinertex.dto.ResultAllParametersDTO;
 import okdados.com.br.api_leinertex.entity.YieldEntity;
+import okdados.com.br.api_leinertex.service.ColorService;
 import okdados.com.br.api_leinertex.service.ProductService;
 import okdados.com.br.api_leinertex.service.ResultService;
 import okdados.com.br.api_leinertex.service.YieldService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,6 +25,8 @@ public class ProductController {
     ProductService productService;
     @Autowired
     YieldService yieldService;
+    @Autowired
+    ColorService colorService;
 
 
     @GetMapping(path = "/filtro-listagem")
@@ -34,9 +35,15 @@ public class ProductController {
     }
 
     @GetMapping(path = "lista-produtos/page={page}/limit={limit}")
-    public ProductListDTO findProductWithIdAndName(@PathVariable("page") int page,
-                                                    @PathVariable("limit") int size) {
-        return productService.findProductWithIdAndName(page, size);
+    public ProductListDTO findProductWithIdAndName( @PathVariable("page") int page,
+                                                    @PathVariable("limit") int size,
+                                                    @RequestParam(value = "matiz", required = false) String matiz,
+                                                    @RequestParam(value = "tipo", required = false) String tipo,
+                                                    @RequestParam(value = "linha", required = false) String linha,
+                                                    @RequestParam(value = "ambiente", required = false) String ambiente,
+                                                    @RequestParam(value = "acabamento", required = false) String acabamento,
+                                                    @RequestParam(value = "superficie", required = false) String superficie) {
+        return productService.findProductWithIdAndName(page, size, matiz, tipo, linha, ambiente, acabamento, superficie);
     }
 
     @GetMapping(path = "/rendimento")
@@ -48,5 +55,12 @@ public class ProductController {
     public  List<ProductDTO> findProductById(@PathVariable("id") String id) {
         return productService.findProductById(id);
     }
+
+    @GetMapping(path = "cores/{matiz}")
+    public List<ColorByMatizDTO> findColorByMatiz(@PathVariable("matiz") String matiz) {
+        return colorService.findColorByMatiz(matiz);
+    }
+
+
 
 }

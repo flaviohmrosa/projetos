@@ -1,4 +1,4 @@
-package okdados.com.br.api_leinertex.rowmapper;
+package okdados.com.br.api_leinertex.entity.rowmapper;
 
 import okdados.com.br.api_leinertex.dto.MatizDTO;
 import org.springframework.jdbc.core.RowMapper;
