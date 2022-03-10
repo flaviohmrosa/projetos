@@ -32,13 +32,13 @@ public class ProductDinamicRepository {
 
 
     public List<ProductIdAndNameDTO> findProductWithIdAndName(int page,
-                                                        int size,
-                                                        String matiz,
-                                                        String tipo,
-                                                        String linha,
-                                                        String ambiente,
-                                                        String acabamento,
-                                                        String superficie) {
+                                                                int size,
+                                                                String matiz,
+                                                                String tipo,
+                                                                String linha,
+                                                                String ambiente,
+                                                                String acabamento,
+                                                                String superficie) {
 
         List<ProductIdAndNameDTO> list = new ArrayList<>();
         final Map<String, Object> map = new HashMap<>();
