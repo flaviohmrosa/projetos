@@ -48,7 +48,7 @@ public class ProductController {
                                                         matiz,
                                                         tipo,
                                                         linha,
-                                                        ambiente,
+                                                         ambiente,
                                                         acabamento,
                                                         superficie);
     }

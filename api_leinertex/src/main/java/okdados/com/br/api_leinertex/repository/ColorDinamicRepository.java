@@ -47,28 +47,29 @@ public class ColorDinamicRepository {
     public List<ColorByMatizDTO> findColorByMatiz(String matiz) {
 
         String sql = "" +
-                    "SELECT  " +
-                    " LTRIM(RTRIM(A.MATIZ_1)) AS 'matiz', " +
-                    " A.COR AS 'id', " +
-                    " LTRIM(RTRIM(E.DESCRICAO)) AS 'nome', " +
-                    " CASE WHEN (ISNUMERIC(A.COD_RGB_PROD) = 1 OR A.COD_RGB_PROD = '') " +
-                        " THEN REPLICATE('0', 9 - LEN(LTRIM(RTRIM(A.COD_RGB_PROD)))) + A.COD_RGB_PROD " +
-                        "  ELSE NULL " +
-                        "  END AS 'codigo_cor', " +
-                    " case when A.ATIVO_SITE = 'S' then 'Sim' else 'Não' end disponivel " +
-                    "FROM BCEST61 A " +
-                    " LEFT JOIN CADEMB C on A.SIT = C.CODIGO " +
-                    " LEFT JOIN BCEST73 E ON A.COR = E.CODIGO " +
-                    " LEFT JOIN BCEST122 D ON (A.COMISSAO = D.CODIGO and 'A' = D.LETRA) " +
-                    " LEFT JOIN TBL_CLASSIF_PROD B ON A.ID_CODIGO_CLASSE = B.ID_CODIGO_CLASSE " +
-                    "WHERE A.SUBGRUPO = 2 " +
-                    "AND ATIVO_SITE = 'S' " +
-                    "AND A.MATIZ_1 = UPPER(?) " +
-                    "GROUP BY  A.MATIZ_1, " +
-                            " A.COR, " +
-                            " E.DESCRICAO, " +
-                            " A.COD_RGB_PROD, " +
-                            " A.ATIVO_SITE ";
+                "SELECT   " +
+                " LTRIM(RTRIM(A.MATIZ_1)) AS 'matiz',  " +
+                " A.COR AS 'id',  " +
+                " LTRIM(RTRIM(E.DESCRICAO)) AS 'nome',  " +
+                " CASE WHEN (ISNUMERIC(A.COD_RGB_PROD) = 1 OR A.COD_RGB_PROD = '')  " +
+                " THEN LTRIM(RTRIM(A.COD_RGB_PROD)) + REPLICATE('0', 9 - LEN(LTRIM(RTRIM(A.COD_RGB_PROD)))) " +
+                "  ELSE NULL  " +
+                "  END AS 'codigo_cor',  " +
+                " case when A.ATIVO_SITE = 'S' then 'Sim' else 'Não' end disponivel  " +
+                "FROM BCEST61 A  " +
+                " LEFT JOIN CADEMB C on A.SIT = C.CODIGO  " +
+                " LEFT JOIN BCEST73 E ON A.COR = E.CODIGO  " +
+                " LEFT JOIN BCEST122 D ON (A.COMISSAO = D.CODIGO and 'A' = D.LETRA)  " +
+                " LEFT JOIN TBL_CLASSIF_PROD B ON A.ID_CODIGO_CLASSE = B.ID_CODIGO_CLASSE  " +
+                "WHERE A.SUBGRUPO = 2  " +
+                "AND ATIVO_SITE = 'S'  " +
+                "AND A.MATIZ_1 COLLATE sql_latin1_general_cp1251_ci_as = UPPER(?)  " +
+                "AND LTRIM(RTRIM(A.COD_RGB_PROD)) <> 'NA' " +
+                "GROUP BY  A.MATIZ_1,  " +
+                " A.COR,  " +
+                " E.DESCRICAO,  " +
+                " A.COD_RGB_PROD,  " +
+                " A.ATIVO_SITE ";
 
         List<ColorByMatizDTO> list = jdbcTemplate.query(sql, new Object[] {matiz}, new ColorByMatizRowMapper());
         return list;

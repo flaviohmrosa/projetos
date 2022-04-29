@@ -56,32 +56,32 @@ public class ProductDinamicRepository {
 
         if(matiz != null){
             map.put("matiz", matiz);
-            sql +=" AND A.MATIZ_1 = UPPER(:matiz) ";
+            sql +=" AND A.MATIZ_1 COLLATE sql_latin1_general_cp1251_ci_as = UPPER(:matiz) ";
         }
 
         if(tipo != null){
             map.put("tipo", tipo);
-            sql +=" AND A.TIPO_PRODUTO = UPPER(:tipo) ";
+            sql +=" AND A.TIPO_PRODUTO COLLATE sql_latin1_general_cp1251_ci_as = UPPER(:tipo) ";
         }
 
         if(linha != null){
             map.put("linha", linha);
-            sql +=" AND A.LINHA_SITE = UPPER(:linha) ";
+            sql +=" AND A.LINHA_SITE COLLATE sql_latin1_general_cp1251_ci_as = UPPER(:linha) ";
         }
 
         if(ambiente != null){
             map.put("ambiente", ambiente);
-            sql +=" AND A.AMBIENTE = UPPER(:ambiente) ";
+            sql +=" AND A.AMBIENTE COLLATE sql_latin1_general_cp1251_ci_as = UPPER(:ambiente) ";
         }
 
         if(acabamento != null){
             map.put("acabamento", acabamento);
-            sql +=" AND A.ACABAMENTO = UPPER(:acabamento) ";
+            sql +=" AND A.ACABAMENTO COLLATE sql_latin1_general_cp1251_ci_as = UPPER(:acabamento) ";
         }
 
         if(superficie != null){
             map.put("superficie", superficie);
-            sql +=" AND A.SUPERFICIE_1 = UPPER(:superficie) ";
+            sql +=" AND A.SUPERFICIE_1 COLLATE sql_latin1_general_cp1251_ci_as = UPPER(:superficie) ";
         }
 
         sql +=  " group by SUBSTRING(A.SUBCLASSE,1,2) " +
@@ -153,7 +153,7 @@ public class ProductDinamicRepository {
                     "WHERE A.SUBGRUPO = 2 " +
                     "AND ATIVO_SITE = 'S' " +
                     "AND A.TIPO_PRODUTO <> '' " +
-                    "AND A.MATIZ_1 = UPPER(?) " +
+                    "AND A.MATIZ_1 COLLATE sql_latin1_general_cp1251_ci_as = UPPER(?) " +
                     "GROUP BY A.TIPO_PRODUTO " +
                     "ORDER BY A.TIPO_PRODUTO";
 
@@ -182,7 +182,7 @@ public class ProductDinamicRepository {
                     "    WHERE A.SUBGRUPO = 2 " +
                     "    AND ATIVO_SITE = 'S' " +
                     "    AND A.TIPO_PRODUTO <> '' " +
-                    "    AND A.MATIZ_1 = UPPER(?) " +
+                    "    AND A.MATIZ_1 COLLATE sql_latin1_general_cp1251_ci_as = UPPER(?) " +
                     "    AND A.TIPO_PRODUTO = UPPER(?) " +
                     "    GROUP BY SUBSTRING(A.SUBCLASSE,1,2) " +
                     "            ,LTRIM(RTRIM(B.DESCRICAO_COMERCIAL)) " +
