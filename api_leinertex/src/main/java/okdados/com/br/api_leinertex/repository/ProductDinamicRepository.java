@@ -166,6 +166,34 @@ public class ProductDinamicRepository {
         return null;
     }
 
+    public List<ProductTypeDTO> findProductTypeByHexacode(String hexacode) {
+
+        try {
+
+            String sql = "" +
+                    "SELECT  " +
+                    " LTRIM(RTRIM(A.TIPO_PRODUTO)) tipo_produto " +
+                    "FROM BCEST61 A " +
+                    " LEFT JOIN CADEMB C on A.SIT = C.CODIGO " +
+                    " LEFT JOIN BCEST73 E ON A.COR = E.CODIGO " +
+                    " LEFT JOIN BCEST122 D ON (A.COMISSAO = D.CODIGO and 'A' = D.LETRA) " +
+                    " LEFT JOIN TBL_CLASSIF_PROD B ON A.ID_CODIGO_CLASSE = B.ID_CODIGO_CLASSE " +
+                    "WHERE A.SUBGRUPO = 2 " +
+                    "AND ATIVO_SITE = 'S' " +
+                    "AND A.TIPO_PRODUTO <> '' " +
+                    "AND LTRIM(RTRIM(A.COD_RGB_PROD)) = UPPER(?)  " +
+                    "GROUP BY A.TIPO_PRODUTO " +
+                    "ORDER BY A.TIPO_PRODUTO";
+
+            List<ProductTypeDTO> list = jdbcTemplate.query(sql, new Object[] {hexacode}, new ProductTypeRowMapper());
+            return list;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     public List<ProductIdAndNameDTO> findProductByMatizAndType(String matiz, String type) {
         try {
@@ -190,6 +218,37 @@ public class ProductDinamicRepository {
                     "            ,LTRIM(RTRIM(B.DESCRICAO_COMERCIAL)) ";
 
             List<ProductIdAndNameDTO> list = jdbcTemplate.query(sql, new Object[] {matiz, type}, new ProductIdAndNameRowMapper());
+            return list;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<ProductIdAndNameDTO> findProductByHexacodeAndType(String hexacode, String type) {
+        try {
+
+            String sql = "" +
+                    "    SELECT " +
+                    "       SUBSTRING(A.SUBCLASSE,1,2) AS 'id' " +
+                    "       ,LTRIM(RTRIM(B.DESCRICAO_COMERCIAL)) AS 'nome' " +
+                    "    FROM BCEST61 A " +
+                    "    LEFT JOIN CADEMB C on A.SIT = C.CODIGO " +
+                    "    LEFT JOIN BCEST73 E ON A.COR = E.CODIGO " +
+                    "    LEFT JOIN BCEST122 D ON (A.COMISSAO = D.CODIGO and 'A' = D.LETRA) " +
+                    "    LEFT JOIN TBL_CLASSIF_PROD B ON A.ID_CODIGO_CLASSE = B.ID_CODIGO_CLASSE " +
+                    "    WHERE A.SUBGRUPO = 2 " +
+                    "    AND ATIVO_SITE = 'S' " +
+                    "    AND A.TIPO_PRODUTO <> '' " +
+                    "    AND LTRIM(RTRIM(A.COD_RGB_PROD)) = UPPER(?)  " +
+                    "    AND A.TIPO_PRODUTO = UPPER(?) " +
+                    "    GROUP BY SUBSTRING(A.SUBCLASSE,1,2) " +
+                    "            ,LTRIM(RTRIM(B.DESCRICAO_COMERCIAL)) " +
+                    "    ORDER BY SUBSTRING(A.SUBCLASSE,1,2) " +
+                    "            ,LTRIM(RTRIM(B.DESCRICAO_COMERCIAL)) ";
+
+            List<ProductIdAndNameDTO> list = jdbcTemplate.query(sql, new Object[] {hexacode, type}, new ProductIdAndNameRowMapper());
             return list;
 
         } catch (Exception e) {

@@ -16,7 +16,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping(path = "/api")
+@RequestMapping(path = "/api/")
 public class ProductController {
 
     @Autowired
@@ -28,8 +28,7 @@ public class ProductController {
     @Autowired
     ColorService colorService;
 
-
-    @GetMapping(path = "/filtro-listagem")
+    @GetMapping(path = "filtro-listagem")
     public ResultAllParametersDTO findFilters() {
         return resultService.findResult();
     }
@@ -48,12 +47,12 @@ public class ProductController {
                                                         matiz,
                                                         tipo,
                                                         linha,
-                                                         ambiente,
+                                                        ambiente,
                                                         acabamento,
                                                         superficie);
     }
 
-    @GetMapping(path = "/rendimento")
+    @GetMapping(path = "rendimento")
     public List<YieldEntity> findAll() {
         return yieldService.findAll();
     }
@@ -66,6 +65,11 @@ public class ProductController {
     @GetMapping(path = "cores/{matiz}")
     public List<ColorByMatizDTO> findColorByMatiz(@PathVariable("matiz") String matiz) {
         return colorService.findColorByMatiz(matiz);
+    }
+
+    @GetMapping(path = "cores-produtos/{hexacode}")
+    public List<ColorByMatizDTO> findColorByHexacode(@PathVariable("hexacode") String hexacode) {
+        return colorService.findColorByHexacode(hexacode);
     }
 
 }

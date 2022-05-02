@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.netbeans.external:jsr173_1.0_api:RELEASE73">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/netbeans/external/jsr173_1.0_api/RELEASE73/jsr173_1.0_api-RELEASE73.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/netbeans/external/jsr173_1.0_api/RELEASE73/jsr173_1.0_api-RELEASE73-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/netbeans/external/jsr173_1.0_api/RELEASE73/jsr173_1.0_api-RELEASE73-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

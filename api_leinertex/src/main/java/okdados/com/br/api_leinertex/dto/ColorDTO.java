@@ -21,6 +21,12 @@ public class ColorDTO {
         this.disponivel = disponivel;
     }
 
+    public ColorDTO(Integer valueOf, Integer valueOf1, Integer valueOf2) {
+    }
+
+    public ColorDTO(Integer valueOf, Integer valueOf1, Integer valueOf2, Integer valueOf3) {
+    }
+
     public Integer getId() {
         return id;
     }

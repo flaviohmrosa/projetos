@@ -75,4 +75,35 @@ public class ColorDinamicRepository {
         return list;
     }
 
+    public List<ColorByMatizDTO> findColorByHexacode(String hexacode) {
+
+        String sql = "" +
+                "SELECT   " +
+                " LTRIM(RTRIM(A.MATIZ_1)) AS 'matiz',  " +
+                " A.COR AS 'id',  " +
+                " LTRIM(RTRIM(E.DESCRICAO)) AS 'nome',  " +
+                " CASE WHEN (ISNUMERIC(A.COD_RGB_PROD) = 1 OR A.COD_RGB_PROD = '')  " +
+                " THEN LTRIM(RTRIM(A.COD_RGB_PROD)) + REPLICATE('0', 9 - LEN(LTRIM(RTRIM(A.COD_RGB_PROD)))) " +
+                "  ELSE NULL  " +
+                "  END AS 'codigo_cor',  " +
+                " case when A.ATIVO_SITE = 'S' then 'Sim' else 'Não' end disponivel  " +
+                "FROM BCEST61 A  " +
+                " LEFT JOIN CADEMB C on A.SIT = C.CODIGO  " +
+                " LEFT JOIN BCEST73 E ON A.COR = E.CODIGO  " +
+                " LEFT JOIN BCEST122 D ON (A.COMISSAO = D.CODIGO and 'A' = D.LETRA)  " +
+                " LEFT JOIN TBL_CLASSIF_PROD B ON A.ID_CODIGO_CLASSE = B.ID_CODIGO_CLASSE  " +
+                "WHERE A.SUBGRUPO = 2  " +
+                "AND ATIVO_SITE = 'S'  " +
+                "AND LTRIM(RTRIM(A.COD_RGB_PROD)) = UPPER(?)  " +
+                "AND LTRIM(RTRIM(A.COD_RGB_PROD)) <> 'NA' " +
+                "GROUP BY  A.MATIZ_1,  " +
+                " A.COR,  " +
+                " E.DESCRICAO,  " +
+                " A.COD_RGB_PROD,  " +
+                " A.ATIVO_SITE ";
+
+        List<ColorByMatizDTO> list = jdbcTemplate.query(sql, new Object[] {hexacode}, new ColorByMatizRowMapper());
+        return list;
+    }
+
 }
