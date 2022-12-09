@@ -35,6 +35,7 @@ public class ColorDinamicRepository {
                     "WHERE SUBSTRING(b.SUBCLASSE,1,2) = ?  " +
                     "AND VA.id = ?  " +
                     "AND a.DESCRICAO <> '' " +
+                    "AND b.ATIVO_SITE = 'S' " +
                     "GROUP BY a.CODIGO  " +
                     "        ,a.DESCRICAO  " +
                     "        ,b.COD_RGB_PROD  " +

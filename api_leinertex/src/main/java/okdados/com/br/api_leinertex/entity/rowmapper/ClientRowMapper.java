@@ -16,6 +16,7 @@ public class ClientRowMapper implements RowMapper<ClientDTO> {
 
         clientDTO.setCodigo(rs.getString("CODIGO"));
         clientDTO.setNomeFantasia(rs.getString("FANTASIA"));
+        clientDTO.setLogradouro(rs.getString("LOGRADOURO"));
         clientDTO.setFone(rs.getString("FONECOM"));
         clientDTO.setEmail(rs.getString("EMAILCOM"));
         clientDTO.setWhatsapp(rs.getString("WHATSAPP"));
